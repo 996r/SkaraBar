@@ -32,17 +32,25 @@
                         <h5 class="section-title ff-secondary text-start text-primary fw-normal">Login</h5>
                         <h1 class="text-white mb-4">Login</h1>
                         <form th:method="post"
-                        th:action="@{login}">
+                        th:action="@{/login}">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input  type="text" class="form-control" id="name" placeholder="Username">
-                                        <label for="name">Username</label>
+                                        <input  type="text"
+                                                class="form-control"
+                                                id="email"
+                                                th:name ="email"
+                                                placeholder="Email"/>
+                                        <label for="email">Email</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="password" placeholder="password"/>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="password"
+                                               th:name="password"
+                                               placeholder="Password"/>
                                         <label for="password">Password</label>
                                     </div>
                                 </div>

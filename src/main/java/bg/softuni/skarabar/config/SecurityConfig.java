@@ -1,7 +1,7 @@
 package bg.softuni.skarabar.config;
 
 import bg.softuni.skarabar.repo.UserRepository;
-import bg.softuni.skarabar.service.UserDetailsService;
+import bg.softuni.skarabar.service.SkaraUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,9 +28,9 @@ import org.springframework.security.web.SecurityFilterChain;
                     )
                     .formLogin(formLogin -> {
                         formLogin.loginPage("/login");
-                        formLogin.usernameParameter("username");
+                        formLogin.usernameParameter("email");
                         formLogin.passwordParameter("password");
-                        formLogin.defaultSuccessUrl("/home",true );
+                        formLogin.defaultSuccessUrl("/team",true );
                         formLogin.failureForwardUrl("/login");
 
                     })
@@ -45,8 +45,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
         }
         @Bean
-        public UserDetailsService userDetailsService (UserRepository userRepository){
-            return new UserDetailsService(userRepository);
+        public SkaraUserDetailsService userDetailsService (UserRepository userRepository){
+            return new SkaraUserDetailsService(userRepository);
         }
         @Bean
         public PasswordEncoder passwordEncoder(){

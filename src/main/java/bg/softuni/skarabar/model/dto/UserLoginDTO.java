@@ -4,19 +4,19 @@ import jakarta.validation.constraints.*;
 
 public class UserLoginDTO {
 @NotBlank
-@Size(min = 3, max = 20)
-    private String username;
+@Size(min = 3, max = 30)
+    private String email;
     private String password;
 
     public UserLoginDTO() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public UserLoginDTO setUsername(String username) {
-        this.username = username;
+    public UserLoginDTO setEmail(String email) {
+        this.email = email;
         return this;
     }
 
