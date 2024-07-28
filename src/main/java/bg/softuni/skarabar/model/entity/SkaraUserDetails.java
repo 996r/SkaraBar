@@ -30,6 +30,6 @@ public class SkaraUserDetails extends User {
     }
 
     public String getFullName(){
-        return firstName+lastName.toString();
+        return firstName+ " " +lastName.toString();
     }
 }

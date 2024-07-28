@@ -20,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
                             authorizeRequest -> {
                                 authorizeRequest
                                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                        .requestMatchers("/","/about","/service","/contact","/booking","/team",
+                                        .requestMatchers("/","/index","/about","/service","/contact","/booking","/team",
                                                 "/testimonial","/menu","/commons", "/login","/register","/img/**","/lib/**",
                                                 "/webfonts/**").permitAll()
                                         .anyRequest().authenticated();
@@ -30,7 +30,7 @@ import org.springframework.security.web.SecurityFilterChain;
                         formLogin.loginPage("/login");
                         formLogin.usernameParameter("email");
                         formLogin.passwordParameter("password");
-                        formLogin.defaultSuccessUrl("/team",true );
+                        formLogin.defaultSuccessUrl("/order",true );
                         formLogin.failureForwardUrl("/login");
 
                     })

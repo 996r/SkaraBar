@@ -1,5 +1,8 @@
 #spring.application.name=SkaraBar
 spring:
+  sql:
+    init:
+      mode: never
   jpa:
     properties:
       hibernate:
@@ -28,3 +31,4 @@ logging:
     blog: WARN
 server:
   port: 8080
+

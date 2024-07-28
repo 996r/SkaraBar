@@ -2,7 +2,11 @@ package bg.softuni.skarabar.service;
 
 import bg.softuni.skarabar.model.entity.SkaraUserDetails;
 import bg.softuni.skarabar.model.entity.UserEntity;
+import bg.softuni.skarabar.model.entity.UserRoleEntity;
+import bg.softuni.skarabar.model.enums.UserRoleEnum;
 import bg.softuni.skarabar.repo.UserRepository;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,10 +36,15 @@ public class SkaraUserDetailsService implements UserDetailsService {
 return new SkaraUserDetails(
         userEntity.getEmail(),
         userEntity.getPassword(),
-        List.of(),
+        userEntity.getRoles().stream().map(UserRoleEntity::getRole).map(SkaraUserDetailsService::map).toList(),
         userEntity.getFirstName(),
         userEntity.getLastName()
 );
+    }
+    private static GrantedAuthority map(UserRoleEnum role){
+        return new SimpleGrantedAuthority(
+                "ROLE_" + role
+        );
     }
 
  }
