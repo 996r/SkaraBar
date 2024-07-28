@@ -1,5 +1,6 @@
 package bg.softuni.skarabar.service;
 
+import bg.softuni.skarabar.model.entity.SkaraUserDetails;
 import bg.softuni.skarabar.model.entity.UserEntity;
 import bg.softuni.skarabar.repo.UserRepository;
 import org.springframework.security.core.userdetails.User;
@@ -28,12 +29,13 @@ public class SkaraUserDetailsService implements UserDetailsService {
     }
 
     private static UserDetails map(UserEntity userEntity){
-return User
-        .withUsername(userEntity.getEmail())
-        .password(userEntity.getPassword())
-        .authorities(List.of())
-        .disabled(false)
-        .build();
+return new SkaraUserDetails(
+        userEntity.getEmail(),
+        userEntity.getPassword(),
+        List.of(),
+        userEntity.getFirstName(),
+        userEntity.getLastName()
+);
     }
 
  }
