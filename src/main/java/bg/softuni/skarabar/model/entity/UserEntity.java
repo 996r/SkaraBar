@@ -14,6 +14,8 @@ public class UserEntity extends BaseEntity {
     @Column(unique = true)
     private String email;
     private String password;
+@OneToMany(mappedBy = "userEntity")
+    private List<Order> orders;
 
     @ManyToMany(
             fetch = FetchType.EAGER
@@ -24,6 +26,7 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<UserRoleEntity> roles = new ArrayList<>();
+
 
     public List<UserRoleEntity> getRoles() {
         return roles;
