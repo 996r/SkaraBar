@@ -17,4 +17,35 @@ public class AddFoodDTO {
         this.price = price;
         this.foodCategory = foodCategory;
     }
+
+    public AddFoodDTO() {
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public AddFoodDTO setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public AddFoodDTO setPrice(double price) {
+        this.price = price;
+        return this;
+    }
+
+    public FoodCategory getFoodCategory() {
+        return foodCategory;
+    }
+
+    public AddFoodDTO setFoodCategory(FoodCategory foodCategory) {
+        this.foodCategory = foodCategory;
+        return this;
+    }
 }
