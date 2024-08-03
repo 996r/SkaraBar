@@ -36,25 +36,42 @@
             <div class="row g-0">
                 <div class="col-md-12 bg-dark d-flex align-items-center">
                     <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
-                        <h5 class="section-title ff-secondary text-start text-primary fw-normal" >Food </h5>
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal" >Food</h5>
                         <h1 class="text-white mb-4">Add Food Product</h1>
-                        <form>
+                        <form th:method="POST"
+                              th:action="@{/admin}"
+                              th:object="${addFoodData}">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="category" placeholder="Category">
-                                        <label for="category">Food Category </label>
+                                    <select th:field="*{foodCategory}"
+                                            th:errorclass="is-invalid"
+                                            class="form-control">
+                                        <option value="">- Select Category -</option>
+                                        <option th:each="type: ${allFoodCategories}"
+                                                th:value="${type}"
+                                                th:text="${type}">
+                                        </option>
+                                    </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="food name" placeholder="Food Name">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="food name"
+                                               placeholder="Food Name"
+                                        th:field="*{name}">
                                         <label for="food name">Food Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="food price" placeholder="Food Price">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="food price"
+                                               placeholder="Food Price"
+                                        th:field="*{price}">
                                         <label for="food price">Food Price</label>
                                     </div>
                                 </div>
