@@ -39,7 +39,7 @@
                         <h5 class="section-title ff-secondary text-start text-primary fw-normal" >Food</h5>
                         <h1 class="text-white mb-4">Add Food Product</h1>
                         <form th:method="POST"
-                              th:action="@{/admin}"
+                              th:action="@{/admin/add-food}"
                               th:object="${addFoodData}">
                             <div class="row g-3">
                                 <div class="col-md-6">
@@ -96,40 +96,15 @@
                             <div class="row g-3">
                                 <div class="col-md-12">
                                     <div class="form-floating">
-<!--                                        <h1>Food List</h1>-->
                                         <ul class = "text-white mb-4">
                                             <li  th:each="food : ${allFoods}">
+                                                Category: <span th:text="${food.foodCategory}"></span>,
                                                 Name: <span th:text="${food.name}"></span>,
-                                                Price: <span th:text="${food.price}"></span>,
-                                                Category: <span th:text="${food.foodCategory}"></span>
+                                                Price: <span th:text="${food.price}"></span>
                                             </li>
                                         </ul>
                                     </div>
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="form-floating">-->
-<!--                                        <input type="text"-->
-<!--                                               class="form-control"-->
-<!--                                               id="food name"-->
-<!--                                               placeholder="Food Name"-->
-<!--                                               th:field="*{name}">-->
-<!--                                        <label for="food name">Food Name</label>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="form-floating">-->
-<!--                                        <input type="text"-->
-<!--                                               class="form-control"-->
-<!--                                               id="food price"-->
-<!--                                               placeholder="Food Price"-->
-<!--                                               th:field="*{price}">-->
-<!--                                        <label for="food price">Food Price</label>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-<!--                                <div class="col-12">-->
-<!--                                    <button class="btn btn-primary w-100 py-3" type="submit">Add Food</button>-->
-<!--                                </div>-->
-                            </div>
+                                </div>
                         </form>
                     </div>
                 </div>
@@ -143,31 +118,107 @@
                     <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
                         <h5 class="section-title ff-secondary text-start text-primary fw-normal" >Add Menu </h5>
                         <h1 class="text-white mb-4">Add Menu</h1>
-                        <form>
+                        <form th:method="POST"
+                              th:action="@{/admin/add-menu}"
+                              th:object="${addMenuData}">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="menu name" placeholder=" Menu Name">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="menu name"
+                                               placeholder=" Menu Name"
+                                               th:field="*{name}">
                                         <label for="menu name">Menu Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="menu price" placeholder="Menu Price">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="menu price"
+                                               placeholder="Menu Price"
+                                               th:field="*{price}">
                                         <label for="menu price">Menu Price</label>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <textarea class="form-control" placeholder="description" id="description" style="height: 100px"></textarea>
-                                        <label for="description">Menu Description</label>
+                                        <textarea class="form-control"
+                                                  placeholder="description"
+                                                  id="selectedFoodField"
+                                                  style="height: 100px"
+                                        th:field="*{description}"></textarea>
+                                        <label for="selectedFoodField">Menu Description</label>
                                     </div>
                                 </div>
+                                <form>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-control" name="food" id="foodDropdown">
+                                            <option value="" disabled selected>Select a food</option>
+                                            <option th:each="food : ${allFoods}"
+                                                    th:value="${food.id}"
+                                                    th:text="${food.name + ' - ' + food.foodCategory + ' - ' + food.price +' lev'}">
+                                            </option>
+                                        </select>
+                                        <button class="btn btn-primary w-100 py-3" type="button" onclick="addSelectedFood()">Send to Field</button>
+                                    </div>
+                                </div>
+                                    </form>
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" type="submit">Add Menu</button>
                                 </div>
                             </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="row g-0">
+                <div class="col-md-12 bg-dark d-flex align-items-center">
+                    <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal" >Menu</h5>
+                        <h1 class="text-white mb-4">Get All Menus</h1>
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <ul class = "text-white mb-4">
+                                            <li  th:each="menu : ${allMenus}">
+                                                Name: <span th:text="${menu.name}"></span>,
+                                                Desc: <span th:text="${menu.description}"></span>,
+                                                Price: <span th:text="${menu.price}"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="form-floating">
+                                        <select class="form-control" name="food" id="menuDropdown">
+                                            <option value="" disabled selected>Select a food</option>
+                                            <option th:each="menu : ${allMenus}"
+                                                    th:value="${menu.id}"
+                                                    th:text="${menu.name + ' - ' + menu.description + ' - ' + menu.price +' lev'}">
+                                            </option>
+                                        </select>
+                                        <button class="btn btn-primary w-100 py-3" type="button" onclick="addSelectedFood()">Remove Selected Menu</button>
+                                    </div>
+
+<!--                                    <form th:action="@{/admin/delete}" method="post">-->
+<!--                                        <select class="form-control" name="menuId" id="menuDropdown">-->
+<!--                                            <option value="" disabled selected>Select a food</option>-->
+<!--                                            <option th:each="menu : ${allMenus}"-->
+<!--                                                    th:value="${menu.id}"-->
+<!--                                                    th:text="${menu.name + ' - ' + menu.description + ' - ' + menu.price + ' lev'}">-->
+<!--                                            </option>-->
+<!--                                        </select>-->
+<!--                                        <input type="hidden" name="_method" value="delete"/>-->
+<!--                                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>-->
+<!--                                        <button type="submit">Delete</button>-->
+<!--                                    </form>-->
+
+                                </div>
                         </form>
                     </div>
                 </div>
@@ -197,7 +248,20 @@
     <script src="lib/tempusdominus/js/moment.min.js"></script>
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script>
+        function addSelectedFood() {
+            const dropdown = document.getElementById('foodDropdown');
+            const selectedText = dropdown.options[dropdown.selectedIndex].text;
 
+            // Get the existing value of the input field and append the selected text
+            const inputField = document.getElementById('selectedFoodField');
+            if (inputField.value) {
+                inputField.value += '\n' + selectedText; // Append with a comma separator
+            } else {
+                inputField.value = selectedText; // Directly set if empty
+            }
+        }
+    </script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
