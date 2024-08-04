@@ -90,6 +90,57 @@
             <div class="row g-0">
                 <div class="col-md-12 bg-dark d-flex align-items-center">
                     <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal" >Food</h5>
+                        <h1 class="text-white mb-4">Get All Foods</h1>
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+<!--                                        <h1>Food List</h1>-->
+                                        <ul class = "text-white mb-4">
+                                            <li  th:each="food : ${allFoods}">
+                                                Name: <span th:text="${food.name}"></span>,
+                                                Price: <span th:text="${food.price}"></span>,
+                                                Category: <span th:text="${food.foodCategory}"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+<!--                                <div class="col-md-6">-->
+<!--                                    <div class="form-floating">-->
+<!--                                        <input type="text"-->
+<!--                                               class="form-control"-->
+<!--                                               id="food name"-->
+<!--                                               placeholder="Food Name"-->
+<!--                                               th:field="*{name}">-->
+<!--                                        <label for="food name">Food Name</label>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-6">-->
+<!--                                    <div class="form-floating">-->
+<!--                                        <input type="text"-->
+<!--                                               class="form-control"-->
+<!--                                               id="food price"-->
+<!--                                               placeholder="Food Price"-->
+<!--                                               th:field="*{price}">-->
+<!--                                        <label for="food price">Food Price</label>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div class="col-12">-->
+<!--                                    <button class="btn btn-primary w-100 py-3" type="submit">Add Food</button>-->
+<!--                                </div>-->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="row g-0">
+                <div class="col-md-12 bg-dark d-flex align-items-center">
+                    <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
                         <h5 class="section-title ff-secondary text-start text-primary fw-normal" >Add Menu </h5>
                         <h1 class="text-white mb-4">Add Menu</h1>
                         <form>
