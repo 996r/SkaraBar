@@ -14,6 +14,7 @@ public class FoodEntity  extends BaseEntity{
     private double price;
     @Enumerated(EnumType.STRING)
     private FoodCategory foodCategory;
+
 @ManyToMany(mappedBy = "foodEntityList")
     private List<MenuEntity> menuEntityList;
 
@@ -51,5 +52,15 @@ public class FoodEntity  extends BaseEntity{
     public FoodEntity setMenuEntityList(List<MenuEntity> menuEntityList) {
         this.menuEntityList = menuEntityList;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "FoodEntity{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", foodCategory=" + foodCategory +
+                ", menuEntityList=" + menuEntityList +
+                '}';
     }
 }

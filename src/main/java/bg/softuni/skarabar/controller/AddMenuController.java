@@ -5,6 +5,7 @@ import bg.softuni.skarabar.model.enums.FoodCategory;
 import bg.softuni.skarabar.service.impl.FoodServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,7 +21,8 @@ public class AddMenuController {
     }
 
     @GetMapping("/admin")
-    public String addMenu(){
+    public String getAllFoods(Model model){
+        model.addAttribute("allFoods",foodService.getAllFoods());
         return "admin";
     }
     @ModelAttribute("addFoodData")
@@ -31,6 +33,8 @@ public class AddMenuController {
     public FoodCategory[] allFoodCategories(){
         return FoodCategory.values();
     }
+
+
 @PostMapping("/admin")
     public String doAddFood(
             @Valid AddFoodDTO data,
