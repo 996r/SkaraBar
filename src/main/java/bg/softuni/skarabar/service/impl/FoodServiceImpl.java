@@ -46,7 +46,7 @@ public class FoodServiceImpl implements FoodService {
      //   logger.info("Fetched {} entities from the repository", entities.size());
 
         // Log the fetched entities
-        entities.forEach(entity -> logger.info("FoodEntity: {}", entity));
+//        entities.forEach(entity -> logger.info("FoodEntity: {}", entity));
 
         List<FoodInfoDTO> foodList = entities.stream()
                 .map(this::foodInfo)
