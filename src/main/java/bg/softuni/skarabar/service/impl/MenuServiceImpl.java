@@ -10,6 +10,7 @@ import bg.softuni.skarabar.service.MenuService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +44,16 @@ public class MenuServiceImpl  implements MenuService {
                 .collect(Collectors.toList());
 
         return menuList;
+    }
+
+    @Override
+    public MenuEntity getMenuById(long id) {
+        Optional<MenuEntity> menuEntityOptional = menuRepository.findById(id);
+        if (menuEntityOptional.isPresent()) {
+            return menuEntityOptional.get();
+        } else {
+            throw new IllegalArgumentException("Menu with id " + id + " not found");
+        }
     }
 
     @Override

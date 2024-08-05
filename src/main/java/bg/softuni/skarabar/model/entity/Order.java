@@ -7,8 +7,8 @@ import java.util.List;
 @Table(name = "orders")
 public class Order extends BaseEntity {
 
-    private double unitPrice;
-    private int quantity;
+    private double totalPrice;
+    private String orderDescription;
 @ManyToMany
 @JoinTable(
         name = "orders_menus",
@@ -19,21 +19,21 @@ public class Order extends BaseEntity {
 @ManyToOne
     private UserEntity userEntity;
 
-    public double getUnitPrice() {
-        return unitPrice;
+    public String getOrderDescription() {
+        return orderDescription;
     }
 
-    public Order setUnitPrice(double unitPrice) {
-        this.unitPrice = unitPrice;
+    public Order setOrderDescription(String orderDescription) {
+        this.orderDescription = orderDescription;
         return this;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
-    public Order setQuantity(int quantity) {
-        this.quantity = quantity;
+    public Order setTotalPrice(double unitPrice) {
+        this.totalPrice = unitPrice;
         return this;
     }
 
