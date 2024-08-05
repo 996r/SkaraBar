@@ -4,6 +4,7 @@ import bg.softuni.skarabar.model.dto.UserRegistrationDTO;
 import bg.softuni.skarabar.model.entity.UserEntity;
 import bg.softuni.skarabar.repo.UserRepository;
 import bg.softuni.skarabar.service.UserService;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
@@ -17,7 +18,6 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
-
         this.userRepository = userRepository;
     }
 
@@ -25,11 +25,15 @@ public class UserServiceImpl implements UserService {
     public void registerUser(UserRegistrationDTO userRegistration) {
         userRepository.save(map(userRegistration));
     }
+
+//    @Override
+//    public User getUserByFullName(String email) {
+//        return userRepository.findByEmail(email);
+//    }
+
     private UserEntity map(UserRegistrationDTO userRegistrationDTO) {
         UserEntity mappedEntity = modelMapper.map(userRegistrationDTO, UserEntity.class);
-
         mappedEntity.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
-
         return mappedEntity;
     }
 }

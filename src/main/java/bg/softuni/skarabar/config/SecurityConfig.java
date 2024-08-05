@@ -21,7 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
                                 authorizeRequest
                                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                         .requestMatchers("/","/index","/about","/service","/contact","/booking","/team",
-                                                "/testimonial","/menu","/commons", "/login","/register","/img/**","/lib/**",
+                                                "/testimonial","/menu","/commons", "/login","/register","/css/**","/img/**","/lib/**",
                                                 "/webfonts/**").permitAll()
                                         .anyRequest().authenticated();
                             }
