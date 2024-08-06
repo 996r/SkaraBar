@@ -2,6 +2,7 @@ package bg.softuni.skarabar.model.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
@@ -30,6 +31,8 @@ public class SkaraUserDetails extends User {
     }
 
     public String getFullName(){
-        return firstName+ " " +lastName.toString();
+        return firstName+ " " + lastName.toString();
     }
+
+
 }

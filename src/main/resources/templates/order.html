@@ -66,19 +66,21 @@
                                     <option value="5">5</option>
                                 </select>
                             </div>
-
                             <button class="btn btn-primary w-100 py-3" type="submit">Add Food</button>
                         </form>
 
-                        <form th:action="@{/order/submit}" method="post">
+                        <form th:action="@{/orders/submit}" method="post">
                             <div>
                                 <label for="foodField">Selected Foods:</label>
                                 <textarea class="form-control" id="foodField" style="height: 150px" name="foodField" readonly  th:text="${selectedFoods}"></textarea>
+
                             </div>
 
                             <div>
+                                <input type="hidden" name="userEntityId" th:value="${userEntityId}" />
                                 <label class="text-white mb-4" for="totalPrice">Total Price:</label>
                                 <input type="text" id="totalPrice" name="totalPrice" readonly th:value="${totalPrice}"/>
+
                             </div>
 
                             <button class="btn btn-primary w-100 py-3" type="submit">Order</button>

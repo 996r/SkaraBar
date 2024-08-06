@@ -1,15 +1,20 @@
 package bg.softuni.skarabar.controller;
 
+import bg.softuni.skarabar.model.dto.AddMenuDTO;
+import bg.softuni.skarabar.model.dto.AddOrderDTO;
 import bg.softuni.skarabar.model.entity.MenuEntity;
 import bg.softuni.skarabar.model.entity.SkaraUserDetails;
 import bg.softuni.skarabar.model.entity.UserEntity;
 import bg.softuni.skarabar.service.UserService;
 import bg.softuni.skarabar.service.impl.MenuServiceImpl;
+import bg.softuni.skarabar.service.impl.OrderServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,31 +29,16 @@ import java.util.List;
 //@RequestMapping("/orders")
 public class OrderController {
     private final MenuServiceImpl menuService;
+    private final OrderServiceImpl orderService;
     private UserService userService;
 
     private List<String> selectedFoods = new ArrayList<>();
     private double totalPrice = 0.0;
 
-    public OrderController(MenuServiceImpl menuService) {
+    public OrderController(MenuServiceImpl menuService, OrderServiceImpl orderService) {
         this.menuService = menuService;
+        this.orderService = orderService;
     }
-
-//    @GetMapping("/order")
-//    public String newOrder2(@AuthenticationPrincipal UserDetails userDetails,
-//                           Model model){
-//        model.addAttribute("allMenus",menuService.getAllMenus());
-//
-//        if (userDetails instanceof SkaraUserDetails skaraUserDetails){
-//            model.addAttribute("welcomeMessage",skaraUserDetails.getFullName());
-//
-//        }  else {
-//            model.addAttribute("welcomeMessage", "Anonymous");
-//        }
-//        model.addAttribute("allMenus", menuService.getAllMenus());
-//        model.addAttribute("selectedFoods", String.join("\n", selectedFoods));
-//        model.addAttribute("totalPrice", totalPrice);
-//        return "order";
-//    }
 
     @GetMapping("/order")
     public String newOrder(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -83,20 +73,38 @@ public String addFood(@RequestParam("menuId") Long menuId,
 }
 
 
-    @PostMapping("/order/submit")
-    public String submitOrder(@RequestParam("fullName") String fullName, @RequestParam("email") String email, @RequestParam("foodField") String foodField, @RequestParam("totalPrice") String totalPrice, RedirectAttributes redirectAttributes) {
-        // Process the order submission here
-        // For example, save the order details to the database
+    @PostMapping("/orders/submit")
+    public String submitOrder(
+            @AuthenticationPrincipal UserDetails userDetails, Model model,
+            @Valid AddOrderDTO data,
+                              @RequestParam("foodField") String foodField,
+                              @RequestParam("totalPrice") String totalPrice,
+                              BindingResult bindingResult,
+                              RedirectAttributes redirectAttributes) {
 
-        // Clear selections after submitting
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("addOrderData", data);
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.addOrderData", bindingResult);
+            return "redirect:/order";
+        }
+        data.setOrderDescription(foodField);
+        data.setTotalPrice(Double.parseDouble(totalPrice));
+       // data.setUserEntityId(Long.parseLong("1"));
+        boolean success = orderService.createOrder(data);
+
+
+        if (!success) {
+            redirectAttributes.addFlashAttribute("addOrderData", data);
+            redirectAttributes.addFlashAttribute("message", "Failed to create order.");
+            return "redirect:/order";
+
+        }
+        redirectAttributes.addFlashAttribute("message", "Order created successfully!");
         selectedFoods.clear();
         this.totalPrice = 0.0;
+        return "redirect:/order";
 
-        // Add a success message to redirect attributes
-        redirectAttributes.addFlashAttribute("message", "Order created successfully!");
-
-        return "redirect:/order/create"; // Redirect to the order creation page
     }
 
-
-}
+    }
