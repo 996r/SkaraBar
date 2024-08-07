@@ -28,22 +28,24 @@ import org.springframework.security.web.SecurityFilterChain;
                     )
                     .formLogin(formLogin -> {
                         formLogin.loginPage("/login");
+                        formLogin.failureUrl("/login?error=true");
                         formLogin.usernameParameter("email");
                         formLogin.passwordParameter("password");
-                        formLogin.defaultSuccessUrl("/order",true );
-                        formLogin.failureForwardUrl("/login");
+                        formLogin.defaultSuccessUrl("/",true );
+
 
                     })
                     .logout(
                             logout -> {
                                 logout.logoutUrl("/logout");
-                                logout.logoutSuccessUrl("/");
+                                logout.logoutSuccessUrl("/login?logout");
                                 logout.invalidateHttpSession(true);
                             }
                     )
                     .build();
 
         }
+
         @Bean
         public SkaraUserDetailsService userDetailsService (UserRepository userRepository){
             return new SkaraUserDetailsService(userRepository);
